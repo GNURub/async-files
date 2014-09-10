@@ -31,7 +31,6 @@
       Object.keys(files).forEach(function(elem) {
         files[elem].forEach(function(file) {
           var id = this.getId(file);
-          if(document.getElementById(id)){return;}
           if(elem === 'css') {
             this.loadCss(id, file);
           }else {
@@ -52,13 +51,14 @@
         js.id = id;
         newElements.appendChild(js);
         document.cookie = prefix + id;
-        console.log('normal')
+        console.log('no cache')
       }else{
-        if (this.fileIsCached(file)) {
+        if (this.fileIsCached(id, file)) {
           console.log('cache')
           this.injectRaw(localStorage[prefix + id], 'script', id);
         }else{
-          this.getContent(file, 'style', id);
+          console.log('cache + load')
+          this.getContent(file, 'script', id);
         }
       }
 
@@ -74,7 +74,7 @@
         newElements.appendChild(stylesheet);
         document.cookie = prefix + id;
       }else{
-        if (this.fileIsCached(file)) {
+        if (this.fileIsCached(id, file)) {
           this.injectRaw(localStorage[prefix + id], 'style', id);
         }else{
           this.getContent(file, 'style', id);
@@ -87,14 +87,13 @@
       var elem = document.createElement(tag);
       elem.innerHTML = text;
       elem.id = id;
-      newElements.appendChild(elem);
+      document.getElementsByTagName('head')[0].appendChild(elem);
     };
 
     asyncFiles.getContent = function(url, type, id) {
       var xhr = new XMLHttpRequest();
       xhr.open('GET', url, true);
-      xhr.onload = function(res){
-        console.log('cache + load', res)
+      xhr.onload = function(){
         if (xhr.readyState === 4) {
           // once we have the content, quickly inject the css rules
           this.injectRaw(xhr.responseText, type, id);
