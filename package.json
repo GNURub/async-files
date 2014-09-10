@@ -1,7 +1,7 @@
 {
   "name": "async-files",
   "version": "1.0.0",
-  "description": "",
+  "description": "WebComponent that allows to load javascripts and css files asynchronously.",
   "dependencies": {
     "gulp": "^3.8.7",
     "gulp-concat": "^2.3.5",

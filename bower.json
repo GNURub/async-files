@@ -4,7 +4,7 @@
   "authors": [
     "Rubén Cid <rubencidlara@gmail.com>"
   ],
-  "description": "Webcomponent that lets load async files and store it in the localStorage",
+  "description": "WebComponent that allows to load javascripts and css files asynchronously.",
   "main": "/webcomponent/async-files.html",
   "moduleType": [
     "globals"
