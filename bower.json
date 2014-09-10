@@ -5,7 +5,7 @@
     "Rubén Cid <rubencidlara@gmail.com>"
   ],
   "description": "WebComponent that allows to load javascripts and css files asynchronously.",
-  "main": "/webcomponent/async-files.html",
+  "main": "webcomponent/async-files.html",
   "moduleType": [
     "globals"
   ],
