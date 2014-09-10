@@ -1,6 +1,3 @@
-<template>
-</template>
-<script>
 (function() {
     'use strict';
     // Creates an object based in the HTML Element prototype
@@ -30,6 +27,7 @@
       Object.keys(files).forEach(function(elem) {
         files[elem].forEach(function(file) {
           var id = this.getId(file);
+          if(document.getElementById(id)){return;}
           if(elem === 'css') {
             this.loadCss(id, file);
           }else {
@@ -122,4 +120,3 @@
         prototype: asyncFiles
     });
 }());
-</script>
