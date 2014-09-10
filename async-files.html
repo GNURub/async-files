@@ -27,34 +27,41 @@
     };
 
     asyncFiles.loadFiles = function(files) {
-      console.log(files)
       var head = document.getElementsByTagName('head')[0];
-      function inject(elem, id, file) {
-        if(elem === 'css') {
-          this.loadCss(id, file);
-        }else {
-          this.loadJs(id, file);
-        }
-      }
       Object.keys(files).forEach(function(elem) {
         files[elem].forEach(function(file) {
           var id = this.getId(file);
           if(document.getElementById(id)){return;}
-          inject.call(this, elem, id, file);
+          if(elem === 'css') {
+            this.loadCss(id, file);
+          }else {
+            this.loadJs(id, file);
+          }
         }.bind(this));
       }.bind(this));
-      // head.appendChild(style);
       head.appendChild(newElements);
     };
 
 
     asyncFiles.loadJs = function(id, file) {
-      var js = document.createElement('script');
-      js.src = file;
-      js.defer = true;
-      js.type = 'text/javascript';
-      js.id = id;
-      newElements.appendChild(js);
+      if (!window.localStorage || !window.XMLHttpRequest) {
+        var js = document.createElement('script');
+        js.src = file;
+        js.defer = true;
+        js.type = 'text/javascript';
+        js.id = id;
+        newElements.appendChild(js);
+        document.cookie = prefix + id;
+        console.log('normal')
+      }else{
+        if (this.fileIsCached(file)) {
+          console.log('cache')
+          this.injectRaw(localStorage[prefix + id], 'script', id);
+        }else{
+          this.getContent(file, 'style', id);
+        }
+      }
+
     };
 
     asyncFiles.loadCss = function(id, file) {
@@ -80,13 +87,14 @@
       var elem = document.createElement(tag);
       elem.innerHTML = text;
       elem.id = id;
-      files.appendChild(elem);
+      newElements.appendChild(elem);
     };
 
     asyncFiles.getContent = function(url, type, id) {
       var xhr = new XMLHttpRequest();
       xhr.open('GET', url, true);
-      xhr.onload = function(){
+      xhr.onload = function(res){
+        console.log('cache + load', res)
         if (xhr.readyState === 4) {
           // once we have the content, quickly inject the css rules
           this.injectRaw(xhr.responseText, type, id);
