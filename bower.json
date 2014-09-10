@@ -29,6 +29,8 @@
     "dev",
     "alert.js",
     "demo.html",
-    "style.css"
+    "style.css",
+    "package.json",
+    "README.md"
   ]
 }

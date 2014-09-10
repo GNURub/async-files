@@ -8,7 +8,7 @@ Use guide
 --------------
 ##### Install aync-files component using [bower].
 ```bash
-$ bower install aync-files#master
+$ bower install async-files#master
 
 ```
 
