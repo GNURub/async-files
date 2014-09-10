@@ -1,7 +1,7 @@
 &lt;async-files&gt; element &lt;/async-files&gt;
 ==========================================
 
-WebComponent that allows to load javascripts and css files asynchronously.
+WebComponent that allows to load javascripts and css files asynchronously and store the files in localStorage.
 
 
 Use guide

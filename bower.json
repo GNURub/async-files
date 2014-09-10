@@ -4,7 +4,7 @@
   "authors": [
     "Rubén Cid <rubencidlara@gmail.com>"
   ],
-  "description": "WebComponent that allows to load javascripts and css files asynchronously.",
+  "description": "WebComponent that allows to load javascripts and css files asynchronously and store the files in localStorage.",
   "main": "webcomponent/async-files.html",
   "moduleType": [
     "globals"
@@ -12,16 +12,23 @@
   "keywords": [
     "Async",
     "load",
+    "WebComponent",
+    "web-components",
     "files",
     "localstorage",
     "performance"
   ],
   "license": "MIT",
+  "homepage": "https://github.com/ruben96/async-files",
   "ignore": [
     "**/.*",
     "node_modules",
     "bower_components",
     "test",
-    "tests"
+    "tests",
+    "dev",
+    "alert.js",
+    "demo.html",
+    "style.css"
   ]
 }
