@@ -5,7 +5,7 @@
     'use strict';
     // Creates an object based in the HTML Element prototype
     var prefix = 'async_', sufix = '_file';
-    var newElements = document.createDocumentFragment();
+    var head = document.getElementsByTagName('head')[0];
     // var style = document.createDocumentFragment();
     var doc = (document._currentScript || document.currentScript).ownerDocument;
     var asyncFiles = Object.create(HTMLElement.prototype);
@@ -27,7 +27,6 @@
     };
 
     asyncFiles.loadFiles = function(files) {
-      var head = document.getElementsByTagName('head')[0];
       Object.keys(files).forEach(function(elem) {
         files[elem].forEach(function(file) {
           var id = this.getId(file);
@@ -38,7 +37,6 @@
           }
         }.bind(this));
       }.bind(this));
-      head.appendChild(newElements);
     };
 
 
@@ -49,15 +47,12 @@
         js.defer = true;
         js.type = 'text/javascript';
         js.id = id;
-        newElements.appendChild(js);
+        head.appendChild(js);
         document.cookie = prefix + id;
-        console.log('no cache')
       }else{
-        if (this.fileIsCached(id, file)) {
-          console.log('cache')
+        if (this.fileIsCached(id)) {
           this.injectRaw(localStorage[prefix + id], 'script', id);
         }else{
-          console.log('cache + load')
           this.getContent(file, 'script', id);
         }
       }
@@ -71,10 +66,10 @@
         stylesheet.id = id;
         stylesheet.rel = 'stylesheet';
         stylesheet.type = 'text/css';
-        newElements.appendChild(stylesheet);
+        head.appendChild(stylesheet);
         document.cookie = prefix + id;
       }else{
-        if (this.fileIsCached(id, file)) {
+        if (this.fileIsCached(id)) {
           this.injectRaw(localStorage[prefix + id], 'style', id);
         }else{
           this.getContent(file, 'style', id);
@@ -87,28 +82,26 @@
       var elem = document.createElement(tag);
       elem.innerHTML = text;
       elem.id = id;
-      document.getElementsByTagName('head')[0].appendChild(elem);
+      head.appendChild(elem);
     };
 
     asyncFiles.getContent = function(url, type, id) {
       var xhr = new XMLHttpRequest();
       xhr.open('GET', url, true);
       xhr.onload = function(){
-        if (xhr.readyState === 4) {
+        if (xhr.readyState === 4 && xhr.status === 200) {
           // once we have the content, quickly inject the css rules
           this.injectRaw(xhr.responseText, type, id);
           // and cache the text content for further use
           // notice that this overwrites anything that might have already been previously cached
           localStorage[prefix + id] = xhr.responseText;
-          localStorage[prefix + id + sufix] = url;
         }
       }.bind(this);
       xhr.send();
     };
 
-    asyncFiles.fileIsCached = function(id, href) {
-      return window.localStorage && localStorage[prefix + id] &&
-      (localStorage[prefix + id + sufix] === href);
+    asyncFiles.fileIsCached = function(id) {
+      return window.localStorage && localStorage[prefix + id];
     };
 
     // Fires when an instance was inserted into the document
@@ -124,12 +117,6 @@
       }
       this.loadFiles(files);
     };
-
-    // Fires when an instance was removed from the document
-    // asyncFiles.detachedCallback = function() {};
-
-    // Fires when an attribute was added, removed, or updated
-    // asyncFiles.attributeChangedCallback = function(attr, oldVal, newVal) {};
 
     document.registerElement('async-files', {
         prototype: asyncFiles

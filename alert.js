@@ -1,1 +1,1 @@
-alert("Async Loaded");
+console.log("Async Loaded");
