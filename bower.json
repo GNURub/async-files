@@ -1,0 +1,27 @@
+{
+  "name": "async-files",
+  "version": "0.1.5",
+  "authors": [
+    "Rubén Cid <rubencidlara@gmail.com>"
+  ],
+  "description": "Webcomponent that lets load async files and store it in the localStorage",
+  "main": "/webcomponent/async-files.html",
+  "moduleType": [
+    "globals"
+  ],
+  "keywords": [
+    "Async",
+    "load",
+    "files",
+    "localstorage",
+    "performance"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
