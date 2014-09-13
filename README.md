@@ -23,7 +23,7 @@ $ bower install async-files#master
 </head>
 <body>
     <async-files
-      js='["//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js", "./1.js"]'
+      js='["one.js", "./two.js"]'
       css='["alternative-fonts.css"]'>
     </async-files>
 </body>
