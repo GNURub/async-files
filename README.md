@@ -16,7 +16,7 @@ $ bower install async-files#master
 ```html
 ...
 <head>
-  <!-- Optional pollyfil-->
+  <!-- Optional polyfil-->
   <script src="//cdnjs.cloudflare.com/ajax/libs/polymer/0.3.4/platform.js"></script>
   <!--Import component-->
   <link rel="import" href="webcomponent/async-files.html">
